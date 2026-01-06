@@ -1,10 +1,41 @@
 @import "tailwindcss";
 
 @keyframes gradient-wave {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
+
 .animate-gradient-wave {
   animation: gradient-wave 24s ease infinite;
+}
+
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+  }
+
+  .badge {
+    background: white !important;
+    color: black !important;
+    border: 1px solid black;
+  }
+
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  img {
+    filter: none !important;
+  }
 }

@@ -13,7 +13,7 @@ const App: React.FC = () => {
       <Header
         name="Sasha Makarov"
         position="Frontend developer"
-        photoSrc="/your-photo.jpg"
+        photoSrc="/profile_photo.jpg"
         photoAlt="Sasha Makarov"
       />
       <SectionBlock id="about" title="About">
@@ -54,9 +54,14 @@ const App: React.FC = () => {
           date="Staged"
           title="Simple coding"
           href="https://github.com/sayces/simple-coding"
-          techStack={["Assembly", "Docker Compose", "Dockerfile", "Computer Architecture"]}
+          techStack={[
+            "Assembly",
+            "Docker Compose",
+            "Dockerfile",
+            "Computer Architecture",
+          ]}
         />
-        
+
         <ContentItem
           date="2024"
           title="DOM Skills"
@@ -69,7 +74,6 @@ const App: React.FC = () => {
           href="https://github.com/sayces/chemistry"
           techStack={["React", "JavaScript", "SCSS", "BEM"]}
         />
-
       </SectionBlock>
       <SectionBlock id="education" title="Education">
         <ContentItem
@@ -77,7 +81,18 @@ const App: React.FC = () => {
           title="Operating Systems and Programming"
           location="Moscow"
           href="https://collegetsaritsyno.mskobr.ru"
-          techStack={["Figma", "Python", "HTML", "CSS", "JavaScript", "SQL", "MySQL", "GridCSS", "Flexbox", "Algorithms"]}
+          techStack={[
+            "Figma",
+            "Python",
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "SQL",
+            "MySQL",
+            "GridCSS",
+            "Flexbox",
+            "Algorithms",
+          ]}
         />
       </SectionBlock>
       <Footer />
