@@ -13,7 +13,7 @@ const App: React.FC = () => {
       <Header
         name="Sasha Makarov"
         position="Frontend developer"
-        photoSrc="/profile_photo.jpg"
+        photoSrc="./profile_photo.jpg"
         photoAlt="Sasha Makarov"
       />
       <SectionBlock id="about" title="About">
