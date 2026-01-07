@@ -1,10 +1,11 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import tailwindcss from "@tailwindcss/vite";
+import tailwindcss from "@tailwindcss/vite"; // если это правильный плагин, ок
 import path from "path";
+import tsconfigPaths from 'vite-tsconfig-paths'; // ← добавь импорт
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), tsconfigPaths()], // ← добавь в plugins
   base: "/portfolio/",
   resolve: {
     alias: {

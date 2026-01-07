@@ -22,7 +22,12 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "ignoreDeprecations": "6.0",
+    "baseUrl": ".", // ← добавь это (относительно tsconfig.app.json)    
+    "paths": {
+      "@/*": ["src/*"] // ← добавь
+    }
   },
   "include": ["src"]
 }

@@ -9,8 +9,8 @@ interface TechPreviewProps {
   isMobile: boolean;
   show: boolean;
   onClose: () => void;
-  anchorRef: RefObject<HTMLDivElement>;
-  previewRef?: RefObject<HTMLDivElement>;
+  anchorRef: RefObject<HTMLDivElement | null>;
+  previewRef?: RefObject<HTMLDivElement | null>;
   badgeColorClass: string;
   badgeTextColorClass: string;
   badgeBorderClass?: string;
