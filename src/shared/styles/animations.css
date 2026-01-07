@@ -1,0 +1,68 @@
+/* Кастомные анимации для превью бейджиков */
+@keyframes preview-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes preview-fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes preview-slide-down {
+  from {
+    transform: translateY(-12px);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes preview-shadow-grow {
+  from {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  to {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.preview-enter {
+  animation: preview-fade-in 300ms ease-out forwards,
+    preview-slide-down 300ms ease-out forwards,
+    preview-shadow-grow 300ms ease-out forwards;
+}
+
+.preview-exit {
+  animation: preview-fade-out 200ms ease-out forwards;
+}
+
+@keyframes gradient-wave {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-wave {
+  animation: gradient-wave 24s ease infinite;
+}

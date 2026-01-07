@@ -1,6 +1,6 @@
 import React from 'react';
-import LinkButton from './LinkButton';
-import Badge from './Badge'; // Новый импорт!
+import LinkButton from '@/shared/components/LinkButton';
+import Badge from '@/shared/components/Badge'; // Новый импорт!
 
 interface ContentItemProps {
   date: string;

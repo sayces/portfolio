@@ -32,10 +32,8 @@ const App: React.FC = () => {
           href="https://sarawan.ru"
           techStack={[
             "Next.js",
-            "React",
             "TypeScript",
             "Tailwind CSS",
-            "REST API",
             "Leaflet",
             "React Hook Form",
             "RTK Query",
