@@ -10,7 +10,7 @@ const Badge: React.FC<BadgeProps> = ({ tech }) => {
   const config = techConfig[tech] || { color: defaultBadgeClass };
 
   const classNames = {
-    badge: `${config.color} text-sm px-3 py-1 rounded-full hover:opacity-80 transition-opacity select-none cursor-pointer`,
+    badge: `${config.color} text-sm px-3 py-1 rounded-full hover:opacity-80 transition-opacity select-none cursor-pointer saturate-40`,
     wrapper: "relative inline-block",
   };
 

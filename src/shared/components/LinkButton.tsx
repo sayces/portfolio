@@ -4,27 +4,27 @@ interface LinkButtonProps {
   href: string;
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
 }
-
-const classNames = {
-  link: "flex justify-between items-center hover:opacity-80 transition-opacity",
-  arrow: "mix-blend-difference invert-50 ml-1",
-};
 
 const LinkButton: React.FC<LinkButtonProps> = ({
   href,
   children,
-  className,
+  className = "",
+  style,
 }) => {
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`${classNames.link} ${className}`}
+      className={`flex items-center justify-center gap-2 rounded-full ${className}`}
+      style={style}
     >
       {children}
-      <span className={classNames.arrow}>↗</span>
+      <span className="text-white/50 opacity-50 mix-blend-difference group-hover:opacity-100 transition-opacity duration-300 ml-1">
+        ↗
+      </span>
     </a>
   );
 };

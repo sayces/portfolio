@@ -49,20 +49,29 @@
   animation: preview-fade-out 200ms ease-out forwards;
 }
 
-@keyframes gradient-wave {
-  0% {
-    background-position: 0% 50%;
+@layer components {
+  @property --gradient-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
   }
 
-  50% {
-    background-position: 100% 50%;
+  .gradient-animated-border {
+    background: conic-gradient(
+        from var(--gradient-angle, 0deg),
+        var(--color1),
+        var(--color2),
+        var(--color3),
+        var(--color1)
+      ) border-box; 
+    
+    transition: all 0.5s ease;
+    animation: spin-gradient 8s linear infinite; /* paused по умолчанию */
   }
 
-  100% {
-    background-position: 0% 50%;
+  @keyframes spin-gradient {
+    to {
+      --gradient-angle: 360deg;
+    }
   }
-}
-
-.animate-gradient-wave {
-  animation: gradient-wave 24s ease infinite;
 }

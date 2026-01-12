@@ -39,7 +39,7 @@ const TechPreview: React.FC<TechPreviewProps> = ({
   }, [previewRef]);
 
   const borderRadiusClass = "rounded-xl";
-  const borderClass = `border-2 ${badgeBorderClass}`;
+  const borderClass = `border-2 ${badgeBorderClass} saturate-70`;
 
   const previewWidth = isMobile ? Math.min(window.innerWidth * 0.9, 384) : 400;
 
