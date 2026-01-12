@@ -12,21 +12,21 @@ const App: React.FC = () => {
     <MainContainer>
       <Header
         name="Sasha Makarov"
-        position="Frontend developer"
+        position="Frontend/Fullstack developer"
         photoSrc="./profile_photo.jpg"
         photoAlt="Sasha Makarov"
       />
-      <SectionBlock id="about" title="About">
+      <SectionBlock id="about" title="About me">
         <p className="text-lg text-gray-600 leading-relaxed">
-          A practical and creative junior frontend developer with experience in
-          a commercial project. I specialize in creating clean, responsive React
-          interfaces with TypeScript. I'm looking for a part-time job or a
-          junior+/middle position to grow in the team.
+          A creative web developer with a strong passion for coding with experience in
+          a commercial project. I specialize in creating clean, responsive interfaces and string functionality using React
+          + TypeScript. I'm looking for a part-time job or a
+          junior+ position to grow in the team.
         </p>
       </SectionBlock>
       <SectionBlock id="experience" title="Work Experience">
         <ContentItem
-          date="2025"
+          date="2024"
           title="Sarawan Delivery"
           location="Moscow, Russia"
           href="https://sarawan.ru"
