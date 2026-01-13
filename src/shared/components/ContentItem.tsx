@@ -1,6 +1,6 @@
 import React from "react";
 import LinkButton from "@/shared/components/LinkButton";
-import Badge from "@/shared/components/Badge";
+import TechnologiesSection from "@/shared/components/TechnologiesSection";
 
 interface ContentItemProps {
   date: string;
@@ -20,10 +20,11 @@ const classNames = {
   secondary:
     "col-start-1 md:col-start-2 row-start-2 row-span-2 col-span-3 md:col-span-2 flex flex-col gap-2 mt-1",
   description: "text-gray-500 md:text-sm text-md -indent-4 ml-4",
-  separator: "h-1 w-full bg-gradient-to-r from-gray-200 to-transparent rounded-full",
+  separator:
+    "h-1 w-full bg-gradient-to-r from-gray-200 to-transparent rounded-full",
   activities: "flex flex-col gap-1",
   activity: "text-gray-600 md:text-sm text-md",
-  badgesContainer: "flex flex-wrap gap-2 transition-all duration-300",
+  badgesContainer: "flex flex-wrap gap-2",
 };
 
 const ContentItem: React.FC<ContentItemProps> = ({
@@ -49,7 +50,7 @@ const ContentItem: React.FC<ContentItemProps> = ({
       {location && <p className={classNames.location}>{location}</p>}
       <div className={classNames.secondary}>
         {description && <p className={classNames.description}>{description}</p>}
-        {description && activities && <div className={classNames.separator}/>}
+        {description && activities && <div className={classNames.separator} />}
         {activities && activities.length > 0 && (
           <div className={classNames.activities}>
             {activities.map((activity, index) => (
@@ -60,11 +61,7 @@ const ContentItem: React.FC<ContentItemProps> = ({
           </div>
         )}
         {techStack.length > 0 && (
-          <div className={classNames.badgesContainer}>
-            {techStack.map((tech, index) => (
-              <Badge key={index} tech={tech} />
-            ))}
-          </div>
+          <TechnologiesSection technologies={techStack} />
         )}
       </div>
     </div>

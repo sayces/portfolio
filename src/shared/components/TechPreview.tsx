@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import type { RefObject } from "react";
 
 interface TechPreviewProps {
@@ -31,60 +31,59 @@ const TechPreview: React.FC<TechPreviewProps> = ({
   badgeBorderClass = "border-gray-600",
 }) => {
   const internalPreviewRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(show);
+  const [shouldRender, setShouldRender] = useState(show);
 
   useEffect(() => {
-    if (previewRef && internalPreviewRef.current) {
-      (previewRef as React.MutableRefObject<HTMLDivElement | null>).current = internalPreviewRef.current;
+    if (show) {
+      setShouldRender(true);
+      requestAnimationFrame(() => {
+        setIsVisible(true);
+      });
+    } else {
+      setIsVisible(false);
+      const timer = setTimeout(() => {
+        setShouldRender(false);
+      }, 300);
+      return () => clearTimeout(timer);
     }
-  }, [previewRef]);
-
-  const borderRadiusClass = "rounded-xl";
-  const borderClass = `border-2 ${badgeBorderClass} saturate-70`;
-
-  const previewWidth = isMobile ? Math.min(window.innerWidth * 0.9, 384) : 400;
-
-  const positionPreview = () => {
-    if (!show || !anchorRef.current || !internalPreviewRef.current) return;
-
-    // Force reflow — магия, чтобы браузер точно посчитал размеры
-    internalPreviewRef.current.offsetHeight;
-
-    const anchor = anchorRef.current.getBoundingClientRect();
-    const preview = internalPreviewRef.current.getBoundingClientRect();
-
-    // Сначала пробуем разместить НАД бейджем
-    let top = anchor.top - preview.height - 12;
-
-    // Если сверху мало места — ставим ПОД бейджем
-    if (anchor.top < preview.height + 12) {
-      top = anchor.bottom + 12;
-    }
-
-    // Горизонталь: центрируем относительно бейджа
-    let left = anchor.left + anchor.width / 2 - preview.width / 2;
-
-    // Отступы от краёв экрана
-    const padding = isMobile ? 16 : 100;
-    left = Math.max(padding, Math.min(left, window.innerWidth - preview.width - padding));
-
-    // Применяем
-    internalPreviewRef.current.style.width = `${previewWidth}px`;
-    internalPreviewRef.current.style.top = `${top}px`;
-    internalPreviewRef.current.style.left = `${left}px`;
-  };
+  }, [show]);
 
   useEffect(() => {
-    if (!show) return;
+    if (!shouldRender || !anchorRef.current || !internalPreviewRef.current)
+      return;
 
-    // Первый расчёт сразу
+    const positionPreview = () => {
+      internalPreviewRef.current!.offsetHeight;
+
+      const anchor = anchorRef.current!.getBoundingClientRect();
+      const preview = internalPreviewRef.current!.getBoundingClientRect();
+
+      let top = anchor.top - preview.height - 12;
+      if (anchor.top < preview.height + 12) {
+        top = anchor.bottom + 12;
+      }
+
+      let left = anchor.left + anchor.width / 2 - preview.width / 2;
+
+      const padding = isMobile ? 16 : 100;
+      left = Math.max(
+        padding,
+        Math.min(left, window.innerWidth - preview.width - padding)
+      );
+
+      const width = isMobile ? Math.min(window.innerWidth * 0.9, 384) : 400;
+
+      Object.assign(internalPreviewRef.current!.style, {
+        width: `${width}px`,
+        top: `${top}px`,
+        left: `${left}px`,
+      });
+    };
+
     positionPreview();
+    const raf = requestAnimationFrame(positionPreview);
 
-    // Второй — на следующем кадре (на случай подгрузки изображений)
-    const raf = requestAnimationFrame(() => {
-      positionPreview();
-    });
-
-    // И на ресайз/скролл — обновляем позицию
     window.addEventListener("resize", positionPreview);
     window.addEventListener("scroll", positionPreview);
 
@@ -93,18 +92,28 @@ const TechPreview: React.FC<TechPreviewProps> = ({
       window.removeEventListener("resize", positionPreview);
       window.removeEventListener("scroll", positionPreview);
     };
-  }, [show, anchorRef, isMobile, previewWidth]);
+  }, [shouldRender, anchorRef, isMobile]);
 
-  if (!show) return null;
+  if (!shouldRender) return null;
+
+  const borderRadiusClass = "rounded-xl";
+  const borderClass = `border-2 ${badgeBorderClass} saturate-70`;
 
   return (
     <div
-      ref={internalPreviewRef}
-      className="fixed z-50 opacity-0 transition-opacity duration-200"
-      style={{ opacity: show ? 1 : 0 }} // Плавное появление
+      ref={(node) => {
+        internalPreviewRef.current = node;
+        if (previewRef) previewRef.current = node;
+      }}
+      className={`
+        fixed z-50 transition-all duration-300 ease-out
+        ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}
+      `}
       onClick={(e) => e.stopPropagation()}
     >
-      <div className={`${badgeColorClass} ${borderRadiusClass} ${borderClass} overflow-hidden shadow-2xl`}>
+      <div
+        className={`${badgeColorClass} ${borderRadiusClass} ${borderClass} overflow-hidden shadow-2xl`}
+      >
         {isMobile && (
           <button
             onClick={onClose}
@@ -121,13 +130,19 @@ const TechPreview: React.FC<TechPreviewProps> = ({
               className="w-14 h-14 rounded-xl shrink-0 opacity-95"
             />
             <div>
-              <h4 className={`font-bold text-xl ${badgeTextColorClass}`}>{tech}</h4>
+              <h4 className={`font-bold text-xl ${badgeTextColorClass}`}>
+                {tech}
+              </h4>
               {description && (
-                <p className={`${badgeTextColorClass} opacity-85 text-sm mt-1`}>{description}</p>
+                <p className={`${badgeTextColorClass} opacity-85 text-sm mt-1`}>
+                  {description}
+                </p>
               )}
             </div>
           </div>
-          <div className={`${badgeTextColorClass} opacity-70 text-sm`}>{domain}</div>
+          <div className={`${badgeTextColorClass} opacity-70 text-sm`}>
+            {domain}
+          </div>
           <a
             href={url}
             target="_blank"

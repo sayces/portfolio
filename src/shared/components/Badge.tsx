@@ -4,22 +4,22 @@ import TechPreview from "@/shared/components/TechPreview";
 
 interface BadgeProps {
   tech: string;
+  isActive: boolean;
+  onOpen: () => void;
+  onClose: () => void;
 }
 
-const Badge: React.FC<BadgeProps> = ({ tech }) => {
+const Badge: React.FC<BadgeProps> = ({ tech, isActive, onOpen, onClose }) => {
   const config = techConfig[tech] || { color: defaultBadgeClass };
 
   const classNames = {
-    badge: `${config.color} text-sm px-3 py-1 rounded-full hover:opacity-80 transition-opacity select-none cursor-pointer saturate-50`,
-    wrapper: "block",
+    badge: `${config.color} text-sm px-3 py-1 rounded-full select-none cursor-pointer saturate-50 transition-all hover:scale-105 active:scale-95`,
+    wrapper: "block relative",
   };
 
-  const [showPreview, setShowPreview] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const hoverTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const leaveTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const wrapperRef = useRef<HTMLDivElement | null>(null);
-  const previewRef = useRef<HTMLDivElement | null>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const previewRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -28,37 +28,14 @@ const Badge: React.FC<BadgeProps> = ({ tech }) => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  const openPreview = () => {
-    if (leaveTimeout.current) clearTimeout(leaveTimeout.current);
-    setShowPreview(true);
-  };
+  const handleBadgeClick = (e: React.MouseEvent) => {
+    e.preventDefault(); // предотвращаем переход по ссылке
 
-  const delayedClose = () => {
-    leaveTimeout.current = setTimeout(() => setShowPreview(false), 300);
-  };
-
-  const handleMouseEnter = () => {
-    hoverTimeout.current = setTimeout(openPreview, 500);
-  };
-
-  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
-    const related = e.relatedTarget as Node | null;
-    if (!previewRef.current?.contains(related)) {
-      delayedClose();
+    if (isActive) {
+      onClose();
+    } else {
+      onOpen();
     }
-  };
-
-  const handleTouchStart = () => {
-    hoverTimeout.current = setTimeout(openPreview, 500);
-  };
-
-  const handleTouchEnd = () => {
-    if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
-  };
-
-  const handleClick = (e: React.MouseEvent) => {
-    if (isMobile || showPreview) e.preventDefault();
   };
 
   const InnerElement = config.url ? (
@@ -67,19 +44,12 @@ const Badge: React.FC<BadgeProps> = ({ tech }) => {
       target="_blank"
       rel="noopener noreferrer"
       className={classNames.badge}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-      onClick={handleClick}
+      onClick={handleBadgeClick}
     >
       {tech}
     </a>
   ) : (
-    <span
-      className={classNames.badge.replace(
-        "hover:opacity-80 cursor-pointer",
-        ""
-      )}
-    >
+    <span className={classNames.badge} onClick={handleBadgeClick}>
       {tech}
     </span>
   );
@@ -88,30 +58,23 @@ const Badge: React.FC<BadgeProps> = ({ tech }) => {
   const domain = config.url ? new URL(config.url).hostname : "";
 
   const colorClasses = config.color.trim().split(" ");
-  const badgeBgClass =
-    colorClasses.find((c: string) => c.startsWith("bg-")) || "";
-  const badgeTextClass =
-    colorClasses.find((c: string) => c.startsWith("text-")) || "";
+  const badgeBgClass = colorClasses.find((c) => c.startsWith("bg-")) || "";
+  const badgeTextClass = colorClasses.find((c) => c.startsWith("text-")) || "";
   const badgeBorderClass = config.borderColor || "border-gray-600";
 
   return (
-    <div
-      ref={wrapperRef}
-      className={classNames.wrapper}
-      onMouseEnter={config.url ? handleMouseEnter : undefined}
-      onMouseLeave={config.url ? handleMouseLeave : undefined}
-    >
+    <div ref={wrapperRef} className={classNames.wrapper}>
       {InnerElement}
 
-      {showPreview && config.url && (
+      {config.url && (
         <TechPreview
           tech={tech}
           url={config.url}
           description={description}
           domain={domain}
           isMobile={isMobile}
-          show={showPreview}
-          onClose={() => setShowPreview(false)}
+          show={isActive}
+          onClose={onClose}
           anchorRef={wrapperRef}
           previewRef={previewRef}
           badgeColorClass={badgeBgClass}
