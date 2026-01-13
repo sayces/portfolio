@@ -57,16 +57,15 @@
   }
 
   .gradient-animated-border {
-    background: conic-gradient(
-        from var(--gradient-angle, 0deg),
+    background: conic-gradient(from var(--gradient-angle, 0deg),
         var(--color1),
         var(--color2),
         var(--color3),
-        var(--color1)
-      ) border-box; 
-    
+        var(--color1)) border-box;
+
     transition: all 0.5s ease;
-    animation: spin-gradient 8s linear infinite; /* paused по умолчанию */
+    animation: spin-gradient 8s linear infinite;
+    /* paused по умолчанию */
   }
 
   @keyframes spin-gradient {

@@ -1,7 +1,7 @@
 import React from "react";
 import LinkButton from "./LinkButton";
 
-type SocialPlatform = "instagram" | "telegram" | "github";
+type SocialPlatform = "instagram" | "telegram" | "github" | "linkedin";
 
 interface SocialButtonProps {
   platform: SocialPlatform;
@@ -13,6 +13,7 @@ const platformNeonColors: Record<SocialPlatform, string> = {
   instagram: "#e6683c #cc2366 #bc1888",
   telegram: "#229ed9 #3ec2f3",
   github: "#333 #666 #999",
+  linkedin: "#0a66c2 #0077b5 #005a9e",
 };
 
 const SocialButton: React.FC<SocialButtonProps> = ({
@@ -35,15 +36,15 @@ const SocialButton: React.FC<SocialButtonProps> = ({
     >
       <LinkButton
         href={href}
-        className="bg-white m-1 hover:mx-3 px-4 py-2 transition-all duration-400"
+        className="bg-white m-0.75 hover:mx-3 px-2 transition-all duration-400"
       >
-        <div className="justify-between flex w-full min-w-50 gap-2">
-          <span className="font-semibold text-lg capitalize text-black drop-shadow-2xl">
+        <div
+          className={`justify-between items-baseline flex w-full min-w-50 gap-2`}
+        >
+          <span className=" text-md capitalize shadow-xl">
             {platform}
           </span>
-          <span className="font-medium text-black drop-shadow-2xl truncate">
-            {username}
-          </span>
+          <span className="drop-shadow-2xl truncate">{username}</span>
         </div>
       </LinkButton>
     </div>
