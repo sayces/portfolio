@@ -37,7 +37,7 @@ const SocialButton: React.FC<SocialButtonProps> = ({
         href={href}
         className="bg-white m-1 hover:mx-3 px-4 py-2 transition-all duration-400"
       >
-        <div className="justify-between flex w-full min-w-60 gap-2">
+        <div className="justify-between flex w-full min-w-50 gap-2">
           <span className="font-semibold text-lg capitalize text-black drop-shadow-2xl">
             {platform}
           </span>

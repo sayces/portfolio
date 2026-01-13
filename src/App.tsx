@@ -18,10 +18,11 @@ const App: React.FC = () => {
       />
       <SectionBlock id="about" title="About me">
         <p className="text-lg text-gray-600 leading-relaxed">
-          A creative web developer with a strong passion for coding with experience in
-          a commercial project. I specialize in creating clean, responsive interfaces and string functionality using React
-          + TypeScript. I'm looking for a part-time job or a
-          junior+ position to grow in the team.
+          A creative web developer with a strong passion for coding with
+          experience in a commercial project. I specialize in creating clean,
+          responsive interfaces and strong functionality using React +
+          TypeScript. I'm looking for a part-time job or a junior+ position to
+          grow in the team.
         </p>
       </SectionBlock>
       <SectionBlock id="experience" title="Work Experience">
@@ -38,6 +39,14 @@ const App: React.FC = () => {
             "React Hook Form",
             "RTK Query",
             "Redux",
+            "Git Pull Requests",
+          ]}
+          description="A courier service web application with order tracking and management features."
+          activities={[
+            "developing a reusable website UI from scratch",
+            "deployment on Vercel",
+            "creating a route map for couriers using Leaflet library",
+            
           ]}
         />
       </SectionBlock>
@@ -70,7 +79,14 @@ const App: React.FC = () => {
           date="2023"
           title="Chemistry"
           href="https://github.com/sayces/chemistry"
-          techStack={["React", "JavaScript", "SCSS", "BEM"]}
+          techStack={[
+            "React",
+            "JavaScript",
+            "SCSS",
+            "BEM",
+            "Rest API",
+            "React Router",
+          ]}
         />
       </SectionBlock>
       <SectionBlock id="education" title="Education">

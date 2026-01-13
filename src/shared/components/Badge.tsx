@@ -10,8 +10,8 @@ const Badge: React.FC<BadgeProps> = ({ tech }) => {
   const config = techConfig[tech] || { color: defaultBadgeClass };
 
   const classNames = {
-    badge: `${config.color} text-sm px-3 py-1 rounded-full hover:opacity-80 transition-opacity select-none cursor-pointer saturate-40`,
-    wrapper: "relative inline-block",
+    badge: `${config.color} text-sm px-3 py-1 rounded-full hover:opacity-80 transition-opacity select-none cursor-pointer saturate-50`,
+    wrapper: "block",
   };
 
   const [showPreview, setShowPreview] = useState(false);
@@ -61,36 +61,49 @@ const Badge: React.FC<BadgeProps> = ({ tech }) => {
     if (isMobile || showPreview) e.preventDefault();
   };
 
-  if (!config.url) return <span className={classNames.badge}>{tech}</span>;
+  const InnerElement = config.url ? (
+    <a
+      href={config.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={classNames.badge}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      onClick={handleClick}
+    >
+      {tech}
+    </a>
+  ) : (
+    <span
+      className={classNames.badge.replace(
+        "hover:opacity-80 cursor-pointer",
+        ""
+      )}
+    >
+      {tech}
+    </span>
+  );
 
   const description = config.description || "";
-  const domain = new URL(config.url).hostname;
+  const domain = config.url ? new URL(config.url).hostname : "";
 
   const colorClasses = config.color.trim().split(" ");
-  const badgeBgClass = colorClasses.find((c: string) => c.startsWith("bg-")) || "";
-  const badgeTextClass = colorClasses.find((c: string) => c.startsWith("text-")) || "";
+  const badgeBgClass =
+    colorClasses.find((c: string) => c.startsWith("bg-")) || "";
+  const badgeTextClass =
+    colorClasses.find((c: string) => c.startsWith("text-")) || "";
   const badgeBorderClass = config.borderColor || "border-gray-600";
 
   return (
     <div
       ref={wrapperRef}
       className={classNames.wrapper}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onMouseEnter={config.url ? handleMouseEnter : undefined}
+      onMouseLeave={config.url ? handleMouseLeave : undefined}
     >
-      <a
-        href={config.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={classNames.badge}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-        onClick={handleClick}
-      >
-        {tech}
-      </a>
+      {InnerElement}
 
-      {showPreview && (
+      {showPreview && config.url && (
         <TechPreview
           tech={tech}
           url={config.url}

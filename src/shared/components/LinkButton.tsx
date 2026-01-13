@@ -18,7 +18,7 @@ const LinkButton: React.FC<LinkButtonProps> = ({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`flex items-center justify-center gap-2 rounded-full ${className}`}
+      className={`flex items-baseline group rounded-full ${className}`}
       style={style}
     >
       {children}
