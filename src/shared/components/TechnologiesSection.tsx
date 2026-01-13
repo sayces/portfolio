@@ -27,7 +27,10 @@ export default function TechnologiesSection({
 
     const handleClickOutside = (e: MouseEvent) => {
       // Проверяем, что клик произошёл не внутри секции (там бейджи и превью)
-      if (sectionRef.current && !sectionRef.current.contains(e.target as Node)) {
+      if (
+        sectionRef.current &&
+        !sectionRef.current.contains(e.target as Node)
+      ) {
         closePreview();
       }
     };

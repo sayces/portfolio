@@ -21,7 +21,7 @@ const App: React.FC = () => {
           TypeScript. I'm looking for a part-time job or a junior+ position to
           grow in the team."
       ></Main>
-      <Footer email="sayces@mail.ru" phone="+79997174837"/>
+      <Footer email="sayces@mail.ru" phone="+79997174837" />
     </section>
   );
 };

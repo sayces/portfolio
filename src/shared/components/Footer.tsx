@@ -51,12 +51,11 @@ const Footer = ({ phone, email }: FooterProps) => {
           </a>
         </div>
         <div className={classNames.socialsList}>
-
-        <SocialButton
-          platform="telegram"
-          username="rnakarov"
-          href="https://t.me/rnakarovÍ"
-        />
+          <SocialButton
+            platform="telegram"
+            username="rnakarov"
+            href="https://t.me/rnakarovÍ"
+          />
         </div>
         <div>
           <div className={classNames.buttonWrapper}>

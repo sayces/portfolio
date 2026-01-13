@@ -15,9 +15,7 @@ const Main: React.FC<MainProps> = ({ about, children }) => {
   return (
     <main className={classNames.main}>
       <SectionBlock id="about" title="About me">
-        <p className="text-lg text-gray-600 leading-relaxed">
-          {about}
-        </p>
+        <p className="text-lg text-gray-600 leading-relaxed">{about}</p>
       </SectionBlock>
       <SectionBlock id="experience" title="Work Experience">
         <ContentItem
