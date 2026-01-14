@@ -25,7 +25,7 @@ const SocialButton: React.FC<SocialButtonProps> = ({
 
   return (
     <div
-      className="gradient-animated-border rounded-full w-full md:w-fit saturate-40"
+      className="gradient-animated-border rounded-full flex justify-center w-full md:w-fit min-w-60 saturate-40 group"
       style={
         {
           "--color1": colors[0],
@@ -36,10 +36,10 @@ const SocialButton: React.FC<SocialButtonProps> = ({
     >
       <LinkButton
         href={href}
-        className="bg-white m-0.75 hover:mx-3 px-2 transition-all duration-400"
+        className="bg-white transition-all duration-300"
       >
         <div
-          className={`justify-between items-baseline flex w-full min-w-50 gap-2`}
+          className={`justify-between items-baseline flex w-full gap-2`}
         >
           <span className=" text-md capitalize shadow-xl">{platform}</span>
           <span className="drop-shadow-2xl truncate">{username}</span>
