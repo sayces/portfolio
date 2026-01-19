@@ -11,7 +11,7 @@ const App: React.FC = () => {
       <Header
         name="Sasha Makarov"
         position="Frontend/Fullstack developer"
-        photoSrc="./profile_photo.jpg"
+        photoSrc="./profile_photo.webp"
         photoAlt="Sasha Makarov"
       />
       <Main

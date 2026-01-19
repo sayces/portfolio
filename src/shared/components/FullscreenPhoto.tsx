@@ -19,6 +19,8 @@ const FullscreenPhoto: React.FC<FullscreenPhotoProps> = ({
       <img
         src={src}
         alt={alt}
+        loading="eager"
+        decoding="async"
         className="max-w-[90vw] max-h-[90vh] object-contain rounded-md shadow-[0_0_40px_20px_rgba(0,0,0,0.3)]"
         onClick={(e) => e.stopPropagation()}
       />

@@ -10,7 +10,7 @@ const classNames = {
   wrapper:
     "overflow-hidden rounded-full border border-gray-200 shadow-sm group cursor-pointer",
   button: "w-full h-full cursor-pointer",
-  img: "w-full h-full object-[0%_30%] object-cover group-hover:object-[0_100%] scale-110 transition-all duration-400 ease-in-out group-hover:scale-100",
+  img: "w-full h-full object-[50%_30%] object-cover scale-110 transition-all duration-500 ease-in-out group-hover:scale-100",
 };
 
 const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ src, alt }) => {
@@ -23,7 +23,15 @@ const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ src, alt }) => {
           className={classNames.button}
           onClick={() => setIsFullscreen(true)}
         >
-          <img src={src} alt={alt} className={classNames.img} />
+          <img
+            src={src}
+            alt={alt}
+            className={classNames.img}
+            decoding="async"
+            loading="eager"
+            width={1600}
+            height={1600}
+          ></img>
         </button>
       </div>
       {isFullscreen && (
