@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SectionBlock from "./SectionBlock";
 import SocialButton from "./SocialButton";
+import LoginButton from "./AuthButton";
 
 type FooterProps = {
   phone: string;
@@ -37,6 +38,7 @@ const Footer = ({ phone, email }: FooterProps) => {
     `,
 
     socialsList: "overflow-hidden flex flex-col gap-4",
+    loginContainer: "flex flex-row justify-end gap-4 mt-4",
   };
 
   return (
@@ -90,6 +92,11 @@ const Footer = ({ phone, email }: FooterProps) => {
               />
             </div>
           </div>
+        </div>
+      </SectionBlock>
+      <SectionBlock id="login" title="Staff only:" className={"mb-0!"}>
+        <div className={classNames.loginContainer}>
+          <LoginButton provider="github" label="GitHub" />
         </div>
       </SectionBlock>
     </footer>
