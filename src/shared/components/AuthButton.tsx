@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "@/shared/context/AuthContext";
-import { supabase } from "@/supabase/client";
+import { signInWithProvider, signOut, supabase } from "@/supabase/client";
 
 type Provider = "github" | "google" | "discord" | "twitter" | "facebook";
 
@@ -13,34 +13,21 @@ export default function AuthButton({
   provider,
   label = "Staff only",
 }: AuthButtonProps) {
-  const { user, signOut: contextSignOut } = useAuth();
+  const { user } = useAuth();
   const [loading, setLoading] = useState(false);
 
   const handleClick = async () => {
-    if (user) {
-      // Есть сессия → выходим полностью
-      setLoading(true);
-      await contextSignOut();
-      setLoading(false);
-      return;
-    }
-
-    // Нет сессии → логинимся через выбранный provider
     setLoading(true);
+
     try {
-      const redirectTo = `${window.location.origin}/portfolio/callback`;
-
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider,
-        options: {
-          redirectTo,
-          // queryParams: { prompt: "select_account" }, // опционально — заставляет выбирать аккаунт
-        },
-      });
-
-      if (error) throw error;
+      if (user) {
+        await signOut();
+      } else {
+        await signInWithProvider(provider);
+      }
     } catch (error) {
-      console.error(`Login with ${provider} error:`, error);
+      console.error(`Auth error with ${provider}:`, error);
+    } finally {
       setLoading(false);
     }
   };

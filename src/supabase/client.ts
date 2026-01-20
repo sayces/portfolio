@@ -11,16 +11,20 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   },
 });
 
-export async function signInWithGitHub() {
+export function getRedirectTo() {
   const isDev = import.meta.env.DEV;
-  const redirectTo = isDev
-    ? "http://localhost:5173/portfolio/callback"
-    : window.location.origin + "/portfolio/callback";
+  return isDev
+    ? "http://localhost:5173/callback"
+    : `${window.location.origin}/callback`;
+}
+
+export async function signInWithProvider(provider: string) {
+  const redirectTo = getRedirectTo();
 
   const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: "github",
+    provider: provider as any,
     options: {
-      redirectTo: redirectTo,
+      redirectTo,
     },
   });
 
