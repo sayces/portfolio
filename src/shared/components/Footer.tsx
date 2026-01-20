@@ -21,12 +21,12 @@ const Footer = ({ phone, email }: FooterProps) => {
     contactLink:
       "underline decoration-2 decoration-blue-400/0 hover:decoration-blue-300/100 transition-all duration-200 w-fit",
     buttonWrapper:
-      "my-4 flex justify-center bg-blue-400 hover:bg-blue-300 bg-blue-400 rounded-full w-full md:w-fit min-w-60 group transition-all duration-300 ease-in-out",
+      "my-4 flex justify-center bg-blue-400 rounded-full w-full md:w-fit min-w-60 group transition-all duration-300 ease-in-out",
     toggleButton:
-      "flex flex-row m-0.75 group-active:mx-3 px-2 w-full items-center gap-2 text-blue-400 g rounded-full group-hover:text-blue-300 transition-all duration-200 ease-in-out bg-white",
+      "flex flex-row m-0.5 group-active:mx-3 px-2 w-full items-center gap-2 text-blue-400 g rounded-full transition-all duration-200 ease-in-out bg-white",
     toggleText:
       "flex flex-row w-full transition-all duration-300 ease-in-out whitespace-nowrap",
-    chevron: `h-full transition-all duration-300 ease-in-out ${
+    chevron: `h-full transition-all duration-300 ease-in-out group-hover:text-blue-300 ${
       isExpanded ? "rotate-180" : "rotate-0"
     }`,
     socialsWrapper: `

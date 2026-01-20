@@ -49,11 +49,11 @@ export default function AuthButton({
   const isDisabled = loading;
 
   const buttonClass =
-    "flex flex-row items-center justify-between gap-2 text-sm text-nowrap disabled:opacity-60 disabled:cursor-not-allowed px-2 rounded-full font-medium transition-all duration-200 ease-in-out cursor-pointer bg-white duration-300 items-baseline w-full items-baseline rounded-full w-full m-0.5 gap-2 group-active:mx-3";
+    "flex flex-row items-center justify-end gap-2 text-sm text-nowrap disabled:opacity-60 disabled:cursor-not-allowed px-2 rounded-full font-medium transition-all duration-200 ease-in-out cursor-pointer bg-white duration-300 items-baseline w-full items-baseline rounded-full w-full m-0.5 gap-2 group-active:mx-3";
 
   const classNames = {
     buttonWrapper:
-      "rounded-full flex justify-center w-full md:w-fit min-w-30 saturate-40 group",
+      "rounded-full flex justify-center w-full md:w-fit min-w-25 saturate-40 group",
     signOutButton: `text-red-800 hover:text-red-900 bg-red-800`,
     singInButton: `text-blue-800 hover:text-blue-900 bg-blue-800`,
   };
