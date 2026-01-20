@@ -12,7 +12,8 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 });
 
 export async function signInWithGitHub() {
-  const redirectUri = `${window.location.origin}/portfolio/callback`;
+  const redirectUri = `${window.location.origin}/callback`;
+  // const redirectUri = 'http://localhost:5173/callback';
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'github',
