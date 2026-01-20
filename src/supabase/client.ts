@@ -15,7 +15,7 @@ export async function signInWithGitHub() {
   const isDev = import.meta.env.DEV;
   const redirectTo = isDev
     ? "http://localhost:5173/portfolio/callback"
-    : "${window.location.origin}" + "/portfolio/callback";
+    : window.location.origin + "/portfolio/callback";
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "github",
