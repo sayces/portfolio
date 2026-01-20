@@ -36,3 +36,8 @@ export async function signOut() {
   const { error } = await supabase.auth.signOut();
   if (error) throw error;
 }
+
+export function getProfilePhotoUrl(path: string = "avatar/profile_photo.jpg") {
+  const { data } = supabase.storage.from("public-assets").getPublicUrl(path);
+  return data.publicUrl;
+}

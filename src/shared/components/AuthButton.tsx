@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "@/shared/context/AuthContext";
-import { signInWithProvider, signOut } from "@/supabase/client";
+import { signInWithProvider, signOut } from "@/lib/supabase/client";
 
 type Provider = "github" | "google" | "discord" | "twitter" | "facebook";
 
@@ -59,4 +59,3 @@ export default function AuthButton({
     </div>
   );
 }
-

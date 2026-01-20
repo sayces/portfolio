@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import Header from "@/shared/components/Header";
+import Header from "@/shared/components/Header/Header";
 import Main from "@/shared/components/Main";
 import Footer from "@/shared/components/Footer";
 import Callback from "@/pages/Callback";
@@ -11,12 +11,7 @@ const App = () => {
         path="/"
         element={
           <section className="min-h-screen bg-white py-8 px-4 md:px-8 font-sans text-gray-800 antialiased">
-            <Header
-              name="Sasha Makarov"
-              position="Frontend/Fullstack developer"
-              photoSrc="./profile_photo.webp"
-              photoAlt="Sasha Makarov"
-            />
+            <Header />
 
             <Main
               about="A creative web developer with a strong passion for coding with
