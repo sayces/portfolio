@@ -14,8 +14,8 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 export function getRedirectTo() {
   const isDev = import.meta.env.DEV;
   return isDev
-    ? "http://localhost:5173/callback"
-    : `${window.location.origin}/callback`;
+    ? "http://localhost:5173/portfolio/callback"
+    : `${window.location.origin}/portfolio/callback`;
 }
 
 export async function signInWithProvider(provider: string) {
