@@ -9,6 +9,13 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     persistSession: true,
     storageKey: "supabase.auth.token",
   },
+  global: {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      apikey: import.meta.env.VITE_SUPABASE_ANON_KEY!,
+    },
+  },
 });
 
 export function getRedirectTo() {
@@ -38,6 +45,7 @@ export async function signOut() {
 }
 
 export function getProfilePhotoUrl(path: string = "avatar/profile_photo.jpg") {
+  const timestamp = Date.now();
   const { data } = supabase.storage.from("public-assets").getPublicUrl(path);
-  return data.publicUrl;
+  return `${data.publicUrl}?v=${timestamp}`;
 }

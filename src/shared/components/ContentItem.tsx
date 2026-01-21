@@ -3,12 +3,12 @@ import LinkButton from "@/shared/components/LinkButton";
 import TechnologiesSection from "@/shared/components/TechnologiesSection";
 
 interface ContentItemProps {
-  date: string;
-  title: string;
-  location?: string;
+  date: React.ReactNode;
+  title: React.ReactNode;
+  location?: React.ReactNode;
   href?: string;
   techStack?: string[];
-  description?: string;
+  description?: React.ReactNode;
   activities?: string[];
 }
 
@@ -21,10 +21,10 @@ const classNames = {
     "col-start-1 md:col-start-2 row-start-2 row-span-2 col-span-3 md:col-span-2 flex flex-col gap-2 mt-1",
   description: "text-gray-500 md:text-sm text-md -indent-4 ml-4",
   separator:
-    "h-1 w-full bg-gradient-to-r from-gray-200 to-transparent rounded-full",
+    "h-1 w-full bg-gradient-to-r from-gray-200 to-transparent rounded-full my-2",
   activities: "flex flex-col gap-1",
   activity: "text-gray-600 md:text-sm text-md",
-  badgesContainer: "flex flex-wrap gap-2",
+  badgesContainer: "flex flex-wrap gap-2 mt-2",
 };
 
 const ContentItem: React.FC<ContentItemProps> = ({
@@ -34,34 +34,45 @@ const ContentItem: React.FC<ContentItemProps> = ({
   href,
   techStack = [],
   description,
-  activities,
+  activities = [],
 }) => {
+  const titleContent = href ? (
+    <LinkButton href={href}>{title}</LinkButton>
+  ) : (
+    title
+  );
+
   return (
     <div className={classNames.item}>
-      <span className={classNames.date}>{date}</span>
-      <div className={classNames.title}>
-        {href ? (
-          <LinkButton href={href}>{title}</LinkButton>
-        ) : (
-          <span>{title}</span>
-        )}
-      </div>
+      <div className={classNames.date}>{date}</div>
 
-      {location && <p className={classNames.location}>{location}</p>}
+      <div className={classNames.title}>{titleContent}</div>
+
+      {location && <div className={classNames.location}>{location}</div>}
+
       <div className={classNames.secondary}>
-        {description && <p className={classNames.description}>{description}</p>}
-        {description && activities && <div className={classNames.separator} />}
-        {activities && activities.length > 0 && (
+        {description && (
+          <div className={classNames.description}>{description}</div>
+        )}
+
+        {(description || activities.length > 0) && techStack.length > 0 && (
+          <div className={classNames.separator} />
+        )}
+
+        {activities.length > 0 && (
           <div className={classNames.activities}>
             {activities.map((activity, index) => (
-              <span key={index} className={classNames.activity}>
+              <div key={index} className={classNames.activity}>
                 • {activity}
-              </span>
+              </div>
             ))}
           </div>
         )}
+
         {techStack.length > 0 && (
-          <TechnologiesSection technologies={techStack} />
+          <div className={classNames.badgesContainer}>
+            <TechnologiesSection technologies={techStack} />
+          </div>
         )}
       </div>
     </div>

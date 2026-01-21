@@ -29,8 +29,12 @@ const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ src, alt }) => {
             className={classNames.img}
             decoding="async"
             loading="eager"
-            width={1600}
-            height={1600}
+            width={160}
+            height={160}
+            onError={(e) => {
+              e.currentTarget.src = "./profile_photo_fallback.png";
+              e.currentTarget.onerror = null;
+            }}
           ></img>
         </button>
       </div>

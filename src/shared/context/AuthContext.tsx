@@ -46,7 +46,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signIn = async () => {
     try {
-      await signInWithProvider("github"); // из client.ts
+      await signInWithProvider("github");
     } catch (err: any) {
       console.error("sign in failed:", err);
       alert("Не удалось войти: " + (err.message || "Неизвестная ошибка"));
