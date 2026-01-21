@@ -11,7 +11,7 @@ const Header: React.FC = () => {
   return (
     <header className="max-w-4xl mx-auto mb-12 flex items-center gap-6 justify-between">
       <div className="flex items-center gap-6">
-        <ProfilePhoto src={content.photo_src} alt="Sasha" />
+        <ProfilePhoto src={content.photo_src} alt="Avatar" />
 
         <div>
           <EditableText

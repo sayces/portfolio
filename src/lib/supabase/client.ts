@@ -44,8 +44,8 @@ export async function signOut() {
   if (error) throw error;
 }
 
-export function getProfilePhotoUrl(path: string = "avatar/profile_photo.jpg") {
+export function getProfilePhotoUrl(path: string = "profile_photo.webp") {
   const timestamp = Date.now();
-  const { data } = supabase.storage.from("public-assets").getPublicUrl(path);
+  const { data } = supabase.storage.from("public-photos").getPublicUrl(path);
   return `${data.publicUrl}?v=${timestamp}`;
 }

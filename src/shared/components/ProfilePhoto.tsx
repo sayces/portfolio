@@ -31,10 +31,10 @@ const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ src, alt }) => {
             loading="eager"
             width={160}
             height={160}
-            onError={(e) => {
-              e.currentTarget.src = "./profile_photo_fallback.png";
-              e.currentTarget.onerror = null;
-            }}
+            // onError={(e) => {
+            //   e.currentTarget.src = "./profile_photo_fallback.png";
+            //   e.currentTarget.onerror = null;
+            // }}
           ></img>
         </button>
       </div>

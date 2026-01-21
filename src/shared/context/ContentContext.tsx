@@ -65,7 +65,7 @@ const defaultContent: Content = {
   about: "",
   email: "",
   phone: "",
-  photo_src: getProfilePhotoUrl("avatar/profile_photo.jpg"),
+  photo_src: getProfilePhotoUrl("profile_photo.webp"),
   experience: [],
   projects: [],
   education: [],
@@ -113,9 +113,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({
 
         setContent({
           ...siteData,
-          photo_src:
-            siteData.photo_src ||
-            `${getProfilePhotoUrl("avatar/profile_photo.jpg")}?v=${Date.now()}`,
+          photo_src: `${getProfilePhotoUrl(siteData.photo_src)}?v=${Date.now()}`,
           experience: expRes.data || [],
           projects: projRes.data || [],
           education: eduRes.data || [],
