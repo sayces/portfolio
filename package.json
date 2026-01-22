@@ -11,15 +11,10 @@
     "deploy": "npm run build && git add dist -f && git commit -m 'Deploy to GitHub Pages' && git subtree push --prefix dist origin gh-pages"
   },
   "dependencies": {
-    "@csstools/postcss-oklab-function": "^5.0.0",
-    "@react-pdf/renderer": "^4.3.2",
     "@supabase/supabase-js": "^2.45.4",
     "@tailwindcss/vite": "^4.1.18",
     "html-to-image": "^1.11.13",
-    "html2pdf.js": "^0.14.0",
     "jspdf": "^4.0.0",
-    "modern-screenshot": "^4.6.7",
-    "postcss-preset-env": "^11.1.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^6.26.0"
