@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import TechPreview from "@/shared/components/TechPreview";
+import TechPreview from "@/shared/components/Technologies/TechPreview";
 import { techConfig, defaultBadgeClass, defaultBorderClass } from "@/lib/constants/tech-config";
 import { getTechMetadata } from "@/lib/supabase/client";
 

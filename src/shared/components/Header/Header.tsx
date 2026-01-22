@@ -1,5 +1,5 @@
 import React from "react";
-import ProfilePhoto from "@/shared/components/ProfilePhoto";
+import ProfilePhoto from "@/shared/components/Photos/ProfilePhoto";
 import EditableText from "@/shared/components/EditableUI/EditableText";
 import { useContent } from "@/shared/context/ContentContext";
 

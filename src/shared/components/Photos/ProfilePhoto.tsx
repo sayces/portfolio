@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import FullscreenPhoto from "@/shared/components/FullscreenPhoto";
-import { useContent } from "../context/ContentContext";
+import FullscreenPhoto from "@/shared/components/Photos/FullscreenPhoto";
+import { useContent } from "../../context/ContentContext";
 interface ProfilePhotoProps {
   src: string;
   alt: string;

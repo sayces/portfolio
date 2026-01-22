@@ -1,8 +1,8 @@
 import { useState } from "react";
-import SectionBlock from "./SectionBlock";
-import SocialButton from "./Buttons/SocialButton";
-import LoginButton from "./Buttons/AuthButton";
-import { DownloadPDFButton } from "./Buttons/DownloadPDFButton";
+import SectionBlock from "@/shared/components/SectionBlock";
+import SocialButton from "@/shared/components/Buttons/SocialButton";
+import LoginButton from "@/shared/components/Buttons/AuthButton";
+import { DownloadPDFButton } from "@/shared/components/Buttons/DownloadPDFButton";
 import { useAuth } from "@/shared/context/AuthContext";
 
 type FooterProps = {
@@ -40,7 +40,7 @@ const Footer = ({ phone, email }: FooterProps) => {
       }
     `,
 
-    socialsList: "overflow-hidden flex flex-col gap-4",
+    socialsList: "overflow-hidden flex flex-col gap-4 bg-white",
     loginContainer: "flex flex-row justify-end gap-4 mt-4",
   };
 
@@ -100,9 +100,11 @@ const Footer = ({ phone, email }: FooterProps) => {
       <SectionBlock id="login" title="Login" className={"mb-0!"}>
         <div className={classNames.loginContainer}>
           <LoginButton provider="github" label="GitHub" />
-          {!user && <DownloadPDFButton />}
+
+          <div className="md:block hidden">
+            <DownloadPDFButton />
+          </div>
         </div>
-        
       </SectionBlock>
     </footer>
   );

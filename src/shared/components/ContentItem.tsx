@@ -1,6 +1,6 @@
 import React from "react";
 import LinkButton from "@/shared/components/Buttons/LinkButton";
-import TechnologiesSection from "@/shared/components/TechnologiesSection";
+import TechnologiesSection from "@/shared/components/Technologies/TechnologiesSection";
 
 interface ContentItemProps {
   date: React.ReactNode;

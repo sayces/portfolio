@@ -1,10 +1,10 @@
 import React from "react";
 import "./index.css";
 
-import Main from "./shared/components/Main/Main";
-import Header from "./shared/components/Header/Header";
-import Footer from "./shared/components/Footer";
-import { useContent } from "./shared/context/ContentContext.tsx";
+import Main from "@/shared/components/Main/Main";
+import Header from "@/shared/components/Header/Header";
+import Footer from "@/shared/components/Footer/Footer";
+import { useContent } from "@/shared/context/ContentContext.tsx";
 
 const App: React.FC = () => {
   const { content } = useContent();

@@ -41,8 +41,8 @@ const SocialButton: React.FC<SocialButtonProps> = ({
         <div
           className={`justify-between items-baseline flex w-full gap-2`}
         >
-          <span className=" text-md capitalize shadow-xl">{platform}</span>
-          <span className="drop-shadow-2xl truncate">{username}</span>
+          <span className="text-md italic capitalize">{platform}</span>
+          <span className="truncate">{username}</span>
         </div>
       </LinkButton>
     </div>
