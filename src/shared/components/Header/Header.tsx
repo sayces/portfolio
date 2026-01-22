@@ -1,12 +1,10 @@
 import React from "react";
 import ProfilePhoto from "@/shared/components/ProfilePhoto";
 import EditableText from "@/shared/components/EditableUI/EditableText";
-import { useAuth } from "@/shared/context/AuthContext";
 import { useContent } from "@/shared/context/ContentContext";
-import { DownloadPDFButton } from "../Buttons/DownloadPDFButton";
 
 const Header: React.FC = () => {
-  const { user } = useAuth();
+  
   const { content } = useContent();
 
   return (
