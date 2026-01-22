@@ -3,7 +3,6 @@ import SectionBlock from "@/shared/components/SectionBlock";
 import SocialButton from "@/shared/components/Buttons/SocialButton";
 import LoginButton from "@/shared/components/Buttons/AuthButton";
 import { DownloadPDFButton } from "@/shared/components/Buttons/DownloadPDFButton";
-import { useAuth } from "@/shared/context/AuthContext";
 
 type FooterProps = {
   phone: string;
@@ -12,7 +11,6 @@ type FooterProps = {
 
 const Footer = ({ phone, email }: FooterProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const { user } = useAuth();
 
   const formatPhone = (s: string) =>
     s.replace(/(\+7)(\d{3})(\d{3})(\d{2})(\d{2})/, "$1 ($2) $3-$4-$5");
