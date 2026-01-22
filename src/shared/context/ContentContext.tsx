@@ -162,38 +162,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({
       return newContent;
     });
 
-    if (!isOwner) return;
-
-    try {
-      const [section, ...rest] = path.split(".");
-      const fieldPath = rest.join(".");
-
-      if (
-        ["name", "position", "about", "email", "phone", "photo_src"].includes(
-          section,
-        )
-      ) {
-        await supabase
-          .from("site_content")
-          .update({ [section]: value })
-          .eq("id", 1);
-      } else if (["experience", "projects", "education"].includes(section)) {
-        const table = section;
-        const match = fieldPath.match(/^(\d+)\.(.+)$/);
-        if (!match) return;
-
-        const [, indexStr, fieldName] = match;
-        const index = parseInt(indexStr, 10);
-
-        await supabase
-          .from(table)
-          .update({ [fieldName]: value })
-          .eq("site_content_id", 1)
-          .eq("order_num", index);
-      }
-    } catch (err) {
-      console.error("Auto-save failed for path:", path, err);
-    }
+    // НИЧЕГО не пишем в Supabase здесь
   };
 
   return (

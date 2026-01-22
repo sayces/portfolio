@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import TechPreview from "@/shared/components/TechPreview";
-import { techConfig, defaultBadgeClass, defaultBorderClass } from "@/shared/tech-config";
+import { techConfig, defaultBadgeClass, defaultBorderClass } from "@/lib/constants/tech-config";
 import { getTechMetadata } from "@/lib/supabase/client";
 
 type BadgeProps = {
@@ -70,8 +70,8 @@ const Badge: React.FC<BadgeProps> = ({
         ref={badgeRef}
         onClick={onOpen}
         className={`
-          relative px-3 py-1 rounded-full text-sm font-medium cursor-pointer
-          transition-all duration-200 select-none whitespace-nowrap
+          relative px-3 py-0.5 rounded-full text-sm font-medium cursor-pointer
+          transition-all duration-200 select-none whitespace-nowrap h-7 flex items-center
           ${colorClass} ${isActive ? "ring-2 ring-offset-2 ring-blue-500" : "hover:opacity-80"}
         `}
       >

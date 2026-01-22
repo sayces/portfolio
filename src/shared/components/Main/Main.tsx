@@ -17,30 +17,76 @@ const Main: React.FC = () => {
   const handleRemoveTech = async (
     section: "experience" | "projects" | "education",
     idx: number,
-    tech: string
+    tech: string,
   ) => {
     const item = content[section][idx];
     const newTechStack = item.tech_stack.filter((t) => t !== tech);
 
+    // Локально
     await updateNested(`${section}.${idx}.tech_stack`, newTechStack);
 
-    await supabase
+    if (!item.id) return; // на всякий случай
+
+    // В БД — только по id
+    const { error } = await supabase
       .from(section)
       .update({ tech_stack: newTechStack })
-      .eq("site_content_id", 1)
-      .eq("order_num", idx);
+      .eq("id", item.id);
+
+    if (error) {
+      console.error(`Error updating ${section}:`, error);
+    }
   };
 
   const handleRenameTech = async (
     section: "experience" | "projects" | "education",
     idx: number,
     oldName: string,
-    newName: string
+    newName: string,
   ) => {
     const item = content[section][idx];
-    const newTechStack = item.tech_stack.map((t) => (t === oldName ? newName : t));
+    const newTechStack = item.tech_stack.map((t) =>
+      t === oldName ? newName : t,
+    );
 
+    // Локально
     await updateNested(`${section}.${idx}.tech_stack`, newTechStack);
+
+    if (!item.id) return;
+
+    // В БД — по id
+    const { error } = await supabase
+      .from(section)
+      .update({ tech_stack: newTechStack })
+      .eq("id", item.id);
+
+    if (error) {
+      console.error(`Error updating ${section}:`, error);
+    }
+  };
+
+  const handleAddTech = async (
+    section: "experience" | "projects" | "education",
+    idx: number,
+    tech: string,
+  ) => {
+    const item = content[section][idx];
+    const newTechStack = [...item.tech_stack, tech];
+
+    // Локально
+    await updateNested(`${section}.${idx}.tech_stack`, newTechStack);
+
+    if (!item.id) return;
+
+    // В БД — по id
+    const { error } = await supabase
+      .from(section)
+      .update({ tech_stack: newTechStack })
+      .eq("id", item.id);
+
+    if (error) {
+      console.error(`Error updating ${section}:`, error);
+    }
   };
 
   return (
@@ -51,7 +97,7 @@ const Main: React.FC = () => {
           initialValue={content.about}
           className={classNames.aboutText}
           multiline
-          placeholder="Расскажите о себе..."
+          placeholder="Tell about yourself..."
         />
       </SectionBlock>
 
@@ -59,6 +105,7 @@ const Main: React.FC = () => {
         {content.experience.map((exp, idx) => (
           <ContentItem
             key={idx}
+            uniqueId={`experience-${idx}`}
             date={
               <EditableText
                 field={`experience.${idx}.date_str`}
@@ -90,6 +137,7 @@ const Main: React.FC = () => {
                   field={`experience.${idx}.description`}
                   initialValue={exp.description}
                   className="text-gray-600 mt-2"
+                  multiline
                 />
               ) : null
             }
@@ -98,6 +146,7 @@ const Main: React.FC = () => {
             onRenameTech={(oldName, newName) =>
               handleRenameTech("experience", idx, oldName, newName)
             }
+            onAddTech={(tech) => handleAddTech("experience", idx, tech)}
           />
         ))}
       </SectionBlock>
@@ -106,6 +155,7 @@ const Main: React.FC = () => {
         {content.projects.map((proj, idx) => (
           <ContentItem
             key={idx}
+            uniqueId={`project-${idx}`}
             date={
               <EditableText
                 field={`projects.${idx}.date_str`}
@@ -126,6 +176,7 @@ const Main: React.FC = () => {
             onRenameTech={(oldName, newName) =>
               handleRenameTech("projects", idx, oldName, newName)
             }
+            onAddTech={(tech) => handleAddTech("projects", idx, tech)}
           />
         ))}
       </SectionBlock>
@@ -134,6 +185,7 @@ const Main: React.FC = () => {
         {content.education.map((edu, idx) => (
           <ContentItem
             key={idx}
+            uniqueId={`education-${idx}`}
             date={
               <EditableText
                 field={`education.${idx}.date_str`}
@@ -163,6 +215,7 @@ const Main: React.FC = () => {
             onRenameTech={(oldName, newName) =>
               handleRenameTech("education", idx, oldName, newName)
             }
+            onAddTech={(tech) => handleAddTech("education", idx, tech)}
           />
         ))}
       </SectionBlock>

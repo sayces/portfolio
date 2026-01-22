@@ -16,7 +16,7 @@ const EditableText: React.FC<EditableTextProps> = ({
   initialValue,
   as: Tag = "div",
   className = "",
-  placeholder = "Введите текст...",
+  placeholder = "Enter text...",
   multiline = false,
 }) => {
   const { isOwner } = useAuth();

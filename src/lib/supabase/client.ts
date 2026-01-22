@@ -100,3 +100,27 @@ export const renameTechInStacks = async (oldName: string, newName: string) => {
     }
   }
 };
+
+export const createTechMetadata = async (techName: string) => {
+  const { data: existing } = await supabase
+    .from("tech_metadata")
+    .select("*")
+    .eq("name", techName)
+    .maybeSingle();
+
+  if (existing) {
+    return { data: existing, error: null };
+  }
+
+  const { data, error } = await supabase
+    .from("tech_metadata")
+    .insert({
+      name: techName,
+      color: "bg-gray-200 text-gray-700",
+      border_color: "border-gray-600",
+    })
+    .select()
+    .single();
+
+  return { data, error };
+};

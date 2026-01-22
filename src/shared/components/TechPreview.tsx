@@ -207,7 +207,7 @@ const TechPreview: React.FC<TechPreviewProps> = ({
           <button
             onClick={onDelete}
             className="absolute top-4 right-14 text-2xl z-10 hover:opacity-70"
-            title="Удалить технологию"
+            title="Delete technology"
           >
             🗑
           </button>
@@ -258,7 +258,7 @@ const TechPreview: React.FC<TechPreviewProps> = ({
                     onChange={(e) => setEditableDescription(e.target.value)}
                     onBlur={handleDescriptionBlur}
                     onKeyDown={(e) => handleKeyDown(e, "description")}
-                    placeholder="Описание"
+                    placeholder="Add description..."
                     autoFocus
                     className={`${badgeTextColorClass} opacity-85 text-sm mt-1 w-full bg-transparent border-b border-current focus:outline-none`}
                   />
@@ -268,7 +268,7 @@ const TechPreview: React.FC<TechPreviewProps> = ({
                     onClick={() => setIsEditingDescription(true)}
                   >
                     {editableDescription || (
-                      <span className="italic opacity-50">Добавить описание...</span>
+                      <span className="italic opacity-50">Add description...</span>
                     )}
                   </p>
                 )
@@ -301,7 +301,7 @@ const TechPreview: React.FC<TechPreviewProps> = ({
                 onClick={() => setIsEditingUrl(true)}
               >
                 {editableUrl || (
-                  <span className="italic opacity-50">Добавить ссылку...</span>
+                  <span className="italic opacity-50">Add link...</span>
                 )}
               </div>
             )
@@ -320,7 +320,7 @@ const TechPreview: React.FC<TechPreviewProps> = ({
               rel="noopener noreferrer"
               className={`${badgeTextColorClass} text-sm font-medium hover:underline block`}
             >
-              Перейти на сайт →
+              Visit website →
             </a>
           )}
         </div>

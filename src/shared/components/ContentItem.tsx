@@ -12,6 +12,8 @@ interface ContentItemProps {
   activities?: string[];
   onRemoveTech?: (tech: string) => void;
   onRenameTech?: (oldName: string, newName: string) => void;
+  onAddTech?: (tech: string) => void;
+  uniqueId?: string; // Добавляем уникальный ID
 }
 
 const classNames = {
@@ -39,6 +41,8 @@ const ContentItem: React.FC<ContentItemProps> = ({
   activities = [],
   onRemoveTech,
   onRenameTech,
+  onAddTech,
+  uniqueId = "",
 }) => {
   const titleContent = href ? (
     <LinkButton href={href}>{title}</LinkButton>
@@ -73,12 +77,14 @@ const ContentItem: React.FC<ContentItemProps> = ({
           </div>
         )}
 
-        {techStack.length > 0 && (
+        {(techStack.length > 0 || onAddTech) && (
           <div className={classNames.badgesContainer}>
             <TechnologiesSection
               technologies={techStack}
               onRemoveTech={onRemoveTech}
               onRenameTech={onRenameTech}
+              onAddTech={onAddTech}
+              uniqueId={uniqueId}
             />
           </div>
         )}
