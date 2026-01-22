@@ -23,10 +23,10 @@ const FullscreenPhoto: React.FC<FullscreenPhotoProps> = ({
         decoding="async"
         className="max-w-[90vw] max-h-[90vh] object-contain rounded-md shadow-[0_0_40px_20px_rgba(0,0,0,0.3)]"
         onClick={(e) => e.stopPropagation()}
-        // onError={(e) => {
-        //   e.currentTarget.src = "./profile_photo_fallback.png";
-        //   e.currentTarget.onerror = null;
-        // }}
+        onError={(e) => {
+          e.currentTarget.src = "./profile_photo_fallback.png";
+          e.currentTarget.onerror = null;
+        }}
       />
     </div>
   );

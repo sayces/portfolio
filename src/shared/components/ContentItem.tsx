@@ -1,5 +1,5 @@
 import React from "react";
-import LinkButton from "@/shared/components/LinkButton";
+import LinkButton from "@/shared/components/Buttons/LinkButton";
 import TechnologiesSection from "@/shared/components/TechnologiesSection";
 
 interface ContentItemProps {

@@ -7,6 +7,9 @@
   "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   }
 }

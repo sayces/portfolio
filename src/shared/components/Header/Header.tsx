@@ -3,6 +3,7 @@ import ProfilePhoto from "@/shared/components/ProfilePhoto";
 import EditableText from "@/shared/components/EditableUI/EditableText";
 import { useAuth } from "@/shared/context/AuthContext";
 import { useContent } from "@/shared/context/ContentContext";
+import { DownloadPDFButton } from "../Buttons/DownloadPDFButton";
 
 const Header: React.FC = () => {
   const { user } = useAuth();
@@ -29,11 +30,6 @@ const Header: React.FC = () => {
           />
         </div>
       </div>
-      {user && (
-        <p className="text-green-700 text-sm">
-          {user.user_metadata?.user_name || user.email}
-        </p>
-      )}
     </header>
   );
 };

@@ -136,6 +136,12 @@ export const techConfig: Record<string, TechConfig> = {
     borderColor: "border-teal-800",
   },
   Algorithms: { color: "bg-gray-400 text-gray-900" },
+  "Node.js": {
+    color: "bg-green-400 text-green-900",
+    url: "https://nodejs.org/en/",
+    description: "JavaScript runtime environment",
+    borderColor: "border-green-800",
+  }
 };
 
 export const defaultBadgeClass = "bg-gray-200 text-gray-700";

@@ -70,7 +70,7 @@ const Badge: React.FC<BadgeProps> = ({
         ref={badgeRef}
         onClick={onOpen}
         className={`
-          relative px-3 py-0.5 rounded-full text-sm font-medium cursor-pointer
+          badge relative px-3 py-0.5 rounded-full text-sm font-medium cursor-pointer
           transition-all duration-200 select-none whitespace-nowrap h-7 flex items-center
           ${colorClass} ${isActive ? "ring-2 ring-offset-2 ring-blue-500" : "hover:opacity-80"}
         `}

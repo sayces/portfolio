@@ -25,7 +25,7 @@ const SocialButton: React.FC<SocialButtonProps> = ({
 
   return (
     <div
-      className="gradient-animated-border rounded-full flex justify-center w-full md:w-fit min-w-60 saturate-40 group"
+      className="socials gradient-animated-border rounded-full flex justify-center w-full md:w-fit min-w-60 saturate-40 group"
       style={
         {
           "--color1": colors[0],

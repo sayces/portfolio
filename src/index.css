@@ -21,4 +21,43 @@
   img {
     filter: none !important;
   }
+
+  #login {
+    display: none !important;
+  }
+
+  .socials {
+    background: white !important;
+    color: black !important;
+    border: 1px solid black;
+  }
+
+  .socials-toggler {
+    display: none !important;
+  }
+}
+
+.pdf-generating #login,
+.pdf-generating .socials-toggler {
+  display: none !important;
+}
+
+.pdf-generating .badge,
+.pdf-generating .socials {
+  background: white !important;
+  color: black !important;
+  border: 1px solid black !important;
+}
+
+.pdf-generating * {
+  transition: none !important;
+  animation: none !important;
+}
+
+.pdf-generating img {
+  filter: none !important;
+}
+
+.pdf-generating .pdf-button {
+  display: none !important;
 }

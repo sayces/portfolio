@@ -1,7 +1,9 @@
 import { useState } from "react";
 import SectionBlock from "./SectionBlock";
-import SocialButton from "./SocialButton";
-import LoginButton from "./AuthButton";
+import SocialButton from "./Buttons/SocialButton";
+import LoginButton from "./Buttons/AuthButton";
+import { DownloadPDFButton } from "./Buttons/DownloadPDFButton";
+import { useAuth } from "@/shared/context/AuthContext";
 
 type FooterProps = {
   phone: string;
@@ -10,6 +12,7 @@ type FooterProps = {
 
 const Footer = ({ phone, email }: FooterProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { user } = useAuth();
 
   const formatPhone = (s: string) =>
     s.replace(/(\+7)(\d{3})(\d{3})(\d{2})(\d{2})/, "$1 ($2) $3-$4-$5");
@@ -21,9 +24,9 @@ const Footer = ({ phone, email }: FooterProps) => {
     contactLink:
       "underline decoration-2 decoration-blue-400/0 hover:decoration-blue-300/100 transition-all duration-200 w-fit",
     buttonWrapper:
-      "my-4 flex justify-center bg-blue-400 rounded-full w-full md:w-fit min-w-60 group transition-all duration-300 ease-in-out",
+      "socials-toggler my-4 flex justify-center bg-blue-400 rounded-full w-full md:w-fit min-w-60 group transition-all duration-300 ease-in-out",
     toggleButton:
-      "flex flex-row m-0.5 group-active:mx-3 px-2 w-full items-center gap-2 text-blue-400 g rounded-full transition-all duration-200 ease-in-out bg-white",
+      "flex flex-row m-0.5 group-active:mx-3 px-2 w-full items-center gap-2 text-blue-400 g rounded-full transition-all duration-200 ease-in-out bg-white cursor-pointer",
     toggleText:
       "flex flex-row w-full transition-all duration-300 ease-in-out whitespace-nowrap",
     chevron: `h-full transition-all duration-300 ease-in-out group-hover:text-blue-300 ${
@@ -77,8 +80,8 @@ const Footer = ({ phone, email }: FooterProps) => {
             <div className={classNames.socialsList}>
               <SocialButton
                 platform="linkedin"
-                username="sasha"
-                href="https://linkedin.com/sayces"
+                username="sayces"
+                href="https://www.linkedin.com/in/sayces"
               />
               <SocialButton
                 platform="instagram"
@@ -94,10 +97,12 @@ const Footer = ({ phone, email }: FooterProps) => {
           </div>
         </div>
       </SectionBlock>
-      <SectionBlock id="login" title="Staff only:" className={"mb-0!"}>
+      <SectionBlock id="login" title="Login" className={"mb-0!"}>
         <div className={classNames.loginContainer}>
           <LoginButton provider="github" label="GitHub" />
+          {!user && <DownloadPDFButton />}
         </div>
+        
       </SectionBlock>
     </footer>
   );
