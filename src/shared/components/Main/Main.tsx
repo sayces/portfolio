@@ -3,6 +3,7 @@ import SectionBlock from "../SectionBlock";
 import ContentItem from "../ContentItem";
 import EditableText from "../EditableUI/EditableText";
 import { useContent } from "@/shared/context/ContentContext";
+import { supabase } from "@/lib/supabase/client";
 
 const classNames = {
   main: "",
@@ -11,7 +12,36 @@ const classNames = {
 };
 
 const Main: React.FC = () => {
-  const { content } = useContent();
+  const { content, updateNested } = useContent();
+
+  const handleRemoveTech = async (
+    section: "experience" | "projects" | "education",
+    idx: number,
+    tech: string
+  ) => {
+    const item = content[section][idx];
+    const newTechStack = item.tech_stack.filter((t) => t !== tech);
+
+    await updateNested(`${section}.${idx}.tech_stack`, newTechStack);
+
+    await supabase
+      .from(section)
+      .update({ tech_stack: newTechStack })
+      .eq("site_content_id", 1)
+      .eq("order_num", idx);
+  };
+
+  const handleRenameTech = async (
+    section: "experience" | "projects" | "education",
+    idx: number,
+    oldName: string,
+    newName: string
+  ) => {
+    const item = content[section][idx];
+    const newTechStack = item.tech_stack.map((t) => (t === oldName ? newName : t));
+
+    await updateNested(`${section}.${idx}.tech_stack`, newTechStack);
+  };
 
   return (
     <main className={classNames.main}>
@@ -64,6 +94,10 @@ const Main: React.FC = () => {
               ) : null
             }
             activities={exp.activities}
+            onRemoveTech={(tech) => handleRemoveTech("experience", idx, tech)}
+            onRenameTech={(oldName, newName) =>
+              handleRenameTech("experience", idx, oldName, newName)
+            }
           />
         ))}
       </SectionBlock>
@@ -88,6 +122,10 @@ const Main: React.FC = () => {
             }
             href={proj.href}
             techStack={proj.tech_stack}
+            onRemoveTech={(tech) => handleRemoveTech("projects", idx, tech)}
+            onRenameTech={(oldName, newName) =>
+              handleRenameTech("projects", idx, oldName, newName)
+            }
           />
         ))}
       </SectionBlock>
@@ -121,6 +159,10 @@ const Main: React.FC = () => {
             }
             href={edu.href}
             techStack={edu.tech_stack}
+            onRemoveTech={(tech) => handleRemoveTech("education", idx, tech)}
+            onRenameTech={(oldName, newName) =>
+              handleRenameTech("education", idx, oldName, newName)
+            }
           />
         ))}
       </SectionBlock>

@@ -2,7 +2,7 @@ export interface TechConfig {
   color: string;
   url?: string;
   description?: string;
-  borderColor?: string; // Для красивого бордера в превью
+  borderColor?: string;
 }
 
 export const techConfig: Record<string, TechConfig> = {
@@ -139,3 +139,4 @@ export const techConfig: Record<string, TechConfig> = {
 };
 
 export const defaultBadgeClass = "bg-gray-200 text-gray-700";
+export const defaultBorderClass = "border-gray-600";

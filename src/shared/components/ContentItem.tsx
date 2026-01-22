@@ -10,6 +10,8 @@ interface ContentItemProps {
   techStack?: string[];
   description?: React.ReactNode;
   activities?: string[];
+  onRemoveTech?: (tech: string) => void;
+  onRenameTech?: (oldName: string, newName: string) => void;
 }
 
 const classNames = {
@@ -35,6 +37,8 @@ const ContentItem: React.FC<ContentItemProps> = ({
   techStack = [],
   description,
   activities = [],
+  onRemoveTech,
+  onRenameTech,
 }) => {
   const titleContent = href ? (
     <LinkButton href={href}>{title}</LinkButton>
@@ -71,7 +75,11 @@ const ContentItem: React.FC<ContentItemProps> = ({
 
         {techStack.length > 0 && (
           <div className={classNames.badgesContainer}>
-            <TechnologiesSection technologies={techStack} />
+            <TechnologiesSection
+              technologies={techStack}
+              onRemoveTech={onRemoveTech}
+              onRenameTech={onRenameTech}
+            />
           </div>
         )}
       </div>

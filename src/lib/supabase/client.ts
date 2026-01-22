@@ -49,3 +49,54 @@ export function getProfilePhotoUrl(path: string = "profile_photo.webp") {
   const { data } = supabase.storage.from("public-photos").getPublicUrl(path);
   return `${data.publicUrl}?v=${timestamp}`;
 }
+
+export const getTechMetadata = async (techName: string) => {
+  const { data } = await supabase
+    .from("tech_metadata")
+    .select("*")
+    .eq("name", techName)
+    .maybeSingle();
+  return data;
+};
+
+export const updateTechMetadata = async (
+  techName: string,
+  updates: Partial<{
+    name: string;
+    color: string;
+    border_color: string;
+    url: string;
+    description: string;
+  }>,
+) => {
+  const { error } = await supabase
+    .from("tech_metadata")
+    .update(updates)
+    .eq("name", techName);
+  return { error };
+};
+
+export const renameTechInStacks = async (oldName: string, newName: string) => {
+  const tables = ["experience", "projects", "education"];
+
+  for (const table of tables) {
+    const { data: items } = await supabase
+      .from(table)
+      .select("id, tech_stack")
+      .eq("site_content_id", 1);
+
+    if (!items) continue;
+
+    for (const item of items) {
+      if (item.tech_stack?.includes(oldName)) {
+        const newStack = item.tech_stack.map((tech: string) =>
+          tech === oldName ? newName : tech,
+        );
+        await supabase
+          .from(table)
+          .update({ tech_stack: newStack })
+          .eq("id", item.id);
+      }
+    }
+  }
+};
