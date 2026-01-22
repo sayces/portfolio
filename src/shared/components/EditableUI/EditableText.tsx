@@ -46,7 +46,7 @@ const EditableText: React.FC<EditableTextProps> = ({
     if (measureRef.current && !multiline) {
       const textWidth = measureRef.current.offsetWidth;
       const containerWidth = containerRef.current?.offsetWidth || 0;
-      
+
       // Используем максимум из ширины текста и ширины контейнера
       const width = Math.max(textWidth + 10, containerWidth);
       setInputWidth(`${width}px`);
@@ -57,13 +57,13 @@ const EditableText: React.FC<EditableTextProps> = ({
   useEffect(() => {
     if (multiline && isEditing && textareaRef.current) {
       // Сбрасываем высоту для правильного расчета scrollHeight
-      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = "auto";
       const scrollHeight = textareaRef.current.scrollHeight;
-      
+
       // Если есть containerRef, учитываем его высоту
       const containerHeight = containerRef.current?.offsetHeight || 0;
       const finalHeight = Math.max(scrollHeight, containerHeight);
-      
+
       setTextareaHeight(`${finalHeight}px`);
       textareaRef.current.style.height = `${finalHeight}px`;
     }
@@ -86,7 +86,7 @@ const EditableText: React.FC<EditableTextProps> = ({
         // Устанавливаем курсор в конец текста
         textareaRef.current.setSelectionRange(
           textareaRef.current.value.length,
-          textareaRef.current.value.length
+          textareaRef.current.value.length,
         );
       } else {
         inputRef.current?.focus();
@@ -123,11 +123,12 @@ const EditableText: React.FC<EditableTextProps> = ({
         {value || <span className="text-gray-400 italic">{placeholder}</span>}
       </Tag>
     );
-  };
+  }
 
   const common = {
     value,
-    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setValue(e.target.value),
+    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+      setValue(e.target.value),
     onBlur: handleBlur,
     onKeyDown: handleKeyDown,
     placeholder,
@@ -141,22 +142,22 @@ const EditableText: React.FC<EditableTextProps> = ({
         <div
           ref={measureRef as any}
           className={`${className} invisible absolute whitespace-pre-wrap pointer-events-none wrap-break-word`}
-          style={{ 
-            width: containerRef.current?.offsetWidth || '100%',
-            maxWidth: maxWidth 
+          style={{
+            width: containerRef.current?.offsetWidth || "100%",
+            maxWidth: maxWidth,
           }}
           aria-hidden="true"
         >
           {value || placeholder}
         </div>
-        
+
         <textarea
           ref={textareaRef}
           {...common}
-          className={`${common.className} resize-none overflow-hidden w-full wrap-break-word whitespace-pre-wrap`}
-          style={{ 
+          className={`${common.className} resize-none overflow-hidden w-full wrap-break-word whitespace-pre-wrap text-overflow-ellipsis`}
+          style={{
             height: textareaHeight,
-            minHeight: `${rows * 1.5}em` 
+            minHeight: `${rows * 1.5}em`,
           }}
         />
       </>
@@ -173,7 +174,7 @@ const EditableText: React.FC<EditableTextProps> = ({
       >
         {value || placeholder}
       </span>
-      
+
       <input
         ref={inputRef}
         type="text"

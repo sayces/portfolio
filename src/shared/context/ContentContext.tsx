@@ -2,39 +2,26 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { getProfilePhotoUrl, supabase } from "@/lib/supabase/client";
 import { useAuth } from "@/shared/context/AuthContext";
 
-export interface ExperienceItem {
+export interface ContentItem {
   id?: number;
+  site_content_id?: number;
+  section: "experience" | "projects" | "education";
   order_num: number;
   date_str: string;
   title: string;
-  company?: string;
-  location?: string;
-  href?: string;
-  description?: string;
+  company?: string | null;
+  location?: string | null;
+  href?: string | null;
+  description?: string | null;
   activities: string[];
   tech_stack: string[];
+  created_at?: string;
+  updated_at?: string;
 }
 
-export interface ProjectItem {
-  id?: number;
-  order_num: number;
-  date_str: string;
-  title: string;
-  href: string;
-  description?: string;
-  tech_stack: string[];
-}
-
-export interface EducationItem {
-  id?: number;
-  order_num: number;
-  date_str: string;
-  title: string;
-  location?: string;
-  href?: string;
-  description?: string;
-  tech_stack: string[];
-}
+export type ExperienceItem = ContentItem;
+export type ProjectItem = ContentItem;
+export type EducationItem = ContentItem;
 
 export interface Content {
   name: string;
@@ -52,6 +39,11 @@ type ContentContextType = {
   content: Content;
   updateContent: (patch: Partial<Content>) => void;
   updateNested: (path: string, value: any) => Promise<void>;
+  updateContentItem: (
+    section: "experience" | "projects" | "education",
+    idx: number,
+    updates: Partial<ContentItem>,
+  ) => Promise<void>;
   isOwner: boolean;
 };
 
@@ -80,27 +72,18 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     const loadAll = async () => {
       try {
-        const [contentRes, expRes, projRes, eduRes] = await Promise.all([
+        const [contentRes, itemsRes] = await Promise.all([
           supabase.from("site_content").select("*").eq("id", 1).maybeSingle(),
           supabase
-            .from("experience")
-            .select("*")
-            .eq("site_content_id", 1)
-            .order("order_num", { ascending: true }),
-          supabase
-            .from("projects")
-            .select("*")
-            .eq("site_content_id", 1)
-            .order("order_num", { ascending: true }),
-          supabase
-            .from("education")
+            .from("content_items")
             .select("*")
             .eq("site_content_id", 1)
             .order("order_num", { ascending: true }),
         ]);
 
-        if (expRes.error || projRes.error || eduRes.error)
-          throw new Error("Load error");
+        console.log("itemsRes", itemsRes);
+
+        if (itemsRes.error) throw itemsRes.error;
 
         const siteData = contentRes.data ?? {
           name: defaultContent.name,
@@ -111,12 +94,14 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({
           photo_src: defaultContent.photo_src,
         };
 
+        const items = itemsRes.data || [];
+
         setContent({
           ...siteData,
-          photo_src: `${getProfilePhotoUrl(siteData.photo_src)}?v=${Date.now()}`,
-          experience: expRes.data || [],
-          projects: projRes.data || [],
-          education: eduRes.data || [],
+          photo_src: getProfilePhotoUrl(siteData.photo_src),
+          experience: items.filter((item) => item.section === "experience"),
+          projects: items.filter((item) => item.section === "projects"),
+          education: items.filter((item) => item.section === "education"),
         });
       } catch (err) {
         console.error("Failed to load content:", err);
@@ -130,7 +115,9 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({
     setContent((prev) => ({ ...prev, ...patch }));
   };
 
+  // Добавьте в ContentContext.tsx в функцию updateNested
   const updateNested = async (path: string, value: any) => {
+    // Обновляем локальное состояние
     setContent((prev) => {
       const newContent = JSON.parse(JSON.stringify(prev));
       const parts = path.split(".");
@@ -162,12 +149,81 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({
       return newContent;
     });
 
-    // НИЧЕГО не пишем в Supabase здесь
+    // Синхронизация с БД для content_items
+    const sectionMatch = path.match(
+      /^(experience|projects|education)\[(\d+)\]\.(\w+)(?:\[(\d+)\])?$/,
+    );
+
+    if (sectionMatch) {
+      const [, section, idxStr, field, activityIdxStr] = sectionMatch;
+      const idx = parseInt(idxStr, 10);
+      const item =
+        content[section as "experience" | "projects" | "education"][idx];
+
+      if (!item?.id) return;
+
+      // Если это обновление activity
+      if (field === "activities" && activityIdxStr !== undefined) {
+        const activityIdx = parseInt(activityIdxStr, 10);
+        const newActivities = [...item.activities];
+        newActivities[activityIdx] = value;
+
+        const { error } = await supabase
+          .from("content_items")
+          .update({ activities: newActivities })
+          .eq("id", item.id);
+
+        if (error) console.error("Error updating activity:", error);
+      }
+      // Если это обновление description или другого поля
+      else {
+        const { error } = await supabase
+          .from("content_items")
+          .update({ [field]: value })
+          .eq("id", item.id);
+
+        if (error) console.error(`Error updating ${field}:`, error);
+      }
+    }
+  };
+
+  // Новая функция для обновления content_item в БД
+  const updateContentItem = async (
+    section: "experience" | "projects" | "education",
+    idx: number,
+    updates: Partial<ContentItem>,
+  ) => {
+    const item = content[section][idx];
+    if (!item?.id) return;
+
+    // Обновляем локально
+    setContent((prev) => {
+      const newContent = { ...prev };
+      newContent[section] = [...newContent[section]];
+      newContent[section][idx] = { ...newContent[section][idx], ...updates };
+      return newContent;
+    });
+
+    // Обновляем в БД
+    const { error } = await supabase
+      .from("content_items")
+      .update(updates)
+      .eq("id", item.id);
+
+    if (error) {
+      console.error(`Error updating content_item:`, error);
+    }
   };
 
   return (
     <ContentContext.Provider
-      value={{ content, updateContent, updateNested, isOwner }}
+      value={{
+        content,
+        updateContent,
+        updateNested,
+        updateContentItem,
+        isOwner,
+      }}
     >
       {children}
     </ContentContext.Provider>
