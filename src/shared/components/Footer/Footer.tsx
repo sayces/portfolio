@@ -82,11 +82,6 @@ const Footer = ({ phone, email }: FooterProps) => {
                 href="https://www.linkedin.com/in/sayces"
               />
               <SocialButton
-                platform="instagram"
-                username="rnakarov"
-                href="https://instagram.com/rnakarov"
-              />
-              <SocialButton
                 platform="github"
                 username="sayces"
                 href="https://github.com/sayces"
